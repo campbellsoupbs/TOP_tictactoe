@@ -57,11 +57,7 @@ svg path{
     padding-bottom: 3px;
 }
 
-
-
-
 /* Main */
-
 
 .text-container {
     background: var(--lightgrey);
@@ -72,8 +68,6 @@ svg path{
     justify-content: center;
     align-items: end;
 }
-
-
 
 .grid-container {
     background: var(--lightgrey);
@@ -93,12 +87,21 @@ svg path{
 }
 
 .field {
-    border: 5px solid var(--cornsilk);
+    border: 2.5px solid var(--cornsilk);
+    height: 130px;
+    width: 130px;
+    display:grid;
+    justify-items: center;
+    align-items: center;
+    color:  var(--cornsilk);
+    font-size: 100px;
 }
 
 .field:hover {
     background-color: var(--lightgrey);
 }
+
+
 
 .btn_div {
     display: flex;
