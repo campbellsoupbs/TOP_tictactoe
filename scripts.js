@@ -1,15 +1,19 @@
-const gameBoard = (function(){
-    const field = Array.from(document.querySelectorAll(".field"));
+// function returnIndex(){
+//     const field = Array.from(document.querySelectorAll(".field"));
 
-    for (let i of field) {
-        i.addEventListener("click", logIndex)
-    }
+//     for (let i of field) {
+//         i.addEventListener("click", logIndex)
+//     }
     
-    function logIndex(e) {
-        console.log(e.target.dataset['index'])
-    }
+//     function logIndex(e) {
+//         let index = e.target.dataset['index']
+//         console.log(index)
+//         return index
+//     }
 
-})()
+//     return index
+
+// }
 
 
 const createPlayers = (function(){
@@ -58,8 +62,10 @@ const checkModule = (function(){
         
         if (match === 0) {
             console.log("No match")
+            return false
         } else {
             console.log("Match!")
+            return true
         }
     }
     
@@ -70,42 +76,94 @@ const checkModule = (function(){
 })()
 
 
+const controller = (function(){
+    let round = 0
+    let winners = 0
+    let winner = ""
+    let tie = 0
+
+    const field = Array.from(document.querySelectorAll(".field"));
+
+    for (let i of field) {
+        i.addEventListener("click", click)
+    }
+    
+    function click(e) {
+        let index = Number(e.target.dataset['index'])
+        let field = e.target
+        console.log(index)
+        game(index, field) 
+    }
+
+    function game(index, field) {
+        if (winners === 1) {
+            //declare winners
+            console.log("winner!")
+        } else if (tie === 1) {
+            //declare tie
+            console.log("Tie!")
+        } else {
+            if (round === 9) {
+                tie++
+            } else if (round%2 === 0) {
+                console.log("Player1")
+                createPlayers.Player1.moves.push(index)
+                showSymbol(field, createPlayers.Player1.symbol)  
+                if (checkModule.checker(createPlayers.Player1.moves)) { 
+                    winners++
+                    winner = "Player 1 wins"
+                    console.log(winner)
+                } else {
+                    round++
+                }
+            } else {
+                console.log("Player2")
+                createPlayers.Player2.moves.push(index) 
+                showSymbol(field, createPlayers.Player2.symbol)  
+                if (checkModule.checker(createPlayers.Player2.moves)) {
+                    winners++
+                    winner = "Player 2 wins"
+                    console.log(winner)
+                } else {
+                    round++
+                }
+            }
+        }
+    }
+
+    function showSymbol(field, symbol){
+        field.innerText = symbol
+    }
+
+    return {
+        round: round,
+        tie: tie,
+        winner: winner,
+        winners: winners
+    }
+
+})()
 
 
+const reset = (function(){
+    const reset_btn = document.querySelector('.reset')
 
+    reset_btn.addEventListener('click', resetGrid)
 
+    function resetGrid(){
+        const field = Array.from(document.querySelectorAll(".field"));
 
+        for (let i of field) {
+            i.innerText = ""
+        }
 
+        createPlayers.Player1.moves = []
+        createPlayers.Player2.moves = []
+        controller.round = 0
+        controller.tie = 0
+        controller.winners = 0
+        controller.winner = ""
+        
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const test1 = []                //false
-// const test2 = [0,1,2, 3]        //true
-// const test3 = [0,1,3]           //false
-// const test4 = [0,1,3,6,7,8]     //true
-// const test5 = [0,3,6,4,1,5]     //true
-
-
-
-// checkModule.checker(test1);
-// checkModule.checker(test2);
-// checkModule.checker(test3);
-// checkModule.checker(test4);
-// checkModule.checker(test5);
-
-
+    }
+})()
