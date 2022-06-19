@@ -1,17 +1,36 @@
-const field = Array.from(document.querySelectorAll(".field"));
+const gameBoard = (function(){
+    const field = Array.from(document.querySelectorAll(".field"));
 
-for (let i of field) {
-    i.addEventListener("click", logIndex)
-}
+    for (let i of field) {
+        i.addEventListener("click", logIndex)
+    }
+    
+    function logIndex(e) {
+        console.log(e.target.dataset['index'])
+    }
 
-function logIndex(e) {
-    console.log(e.target.dataset['index'])
-}
+})()
 
 
+const createPlayers = (function(){
+    
+    function playerFactory(name, symbol) {
+        return {
+            name: name,
+            symbol: symbol,
+            moves: []
+        }
+    }
 
+    const Player1 = playerFactory("Player1", "x")
+    const Player2 = playerFactory("Player2", "o")
 
+    return {
+        Player1: Player1,
+        Player2: Player2
+    }
 
+})()
 
 
 const checkModule = (function(){
@@ -49,6 +68,17 @@ const checkModule = (function(){
     }
     
 })()
+
+
+
+
+
+
+
+
+
+
+
 
 
 
